@@ -1,0 +1,28 @@
+{
+  "name": "praxis-frontend-ui-testing",
+  "version": "1.0.0",
+  "description": "This is a homework about Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SantiagoT21/praxis-frontend-UI-testing.git"
+  },
+  "keywords": [
+    "ui-testing",
+    "dojo",
+    "homework",
+    "gildenroses",
+    "cypress",
+    "UI",
+    "frontend"
+  ],
+  "author": "Santiago Tamayo López stamayol@unal.edu.co @SantiagoT21",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SantiagoT21/praxis-frontend-UI-testing/issues"
+  },
+  "homepage": "https://github.com/SantiagoT21/praxis-frontend-UI-testing#readme"
+}
