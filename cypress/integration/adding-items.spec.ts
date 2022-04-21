@@ -21,6 +21,7 @@ describe("Adding Items", () => {
                 }
             }
         })
+
         menuContentPage.visitMenuContentPage()
 
         cy.get(".list-buttons > button.list-add-button").click()
