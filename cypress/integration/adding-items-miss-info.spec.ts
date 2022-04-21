@@ -23,6 +23,6 @@ describe("Adding Items", () => {
         cy.get("[formcontrolname=sellIn]").type(sellin)
         cy.get("[data-automation=item-form-confirm-button]").should("be.disabled")
 
-        cy.get(".mat-form-field-subscript-wrapper .mat-error").should("have.text", ' Expected value between 0 and 80 ')
+        cy.get(".mat-form-field-subscript-wrapper .mat-error").should("have.text", " Expected value between 0 and 80 ")
     });
 });
