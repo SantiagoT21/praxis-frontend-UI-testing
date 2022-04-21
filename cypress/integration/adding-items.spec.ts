@@ -13,17 +13,17 @@ describe("Adding Items", () => {
     before(() => {
         menuContentPage = new ItemsContentPage()
         addButtonPage = new AddButtonPage()
+
+        cy.request("http://localhost:8080/api/items").then(response =>{
+                    for (const item of response.body) {
+                        if(item.name === name && item.sellIn.toString() === sellin && item.quality.toString() === quality && item.type === type){
+                            cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                        }
+                    }
+        })
     })
 
     it("then should be added a new item, and check if displayed accordingly in list view", () => {
-
-        cy.request("http://localhost:8080/api/items").then(response =>{
-            for (const item of response.body) {
-                if(item.name === name && item.sellIn.toString() === sellin && item.quality.toString() === quality && item.type === type){
-                    cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
-                }
-            }
-        })
 
         menuContentPage.visitMenuContentPage()
         menuContentPage.clickAddButton()

@@ -1,8 +1,9 @@
-import { ItemsContentPage } from "../page/index"
+import { ItemsContentPage,DeleteButtonPage } from "../page/index"
 
 describe("Deleting Items", () => {
 
     let menuContentPage: ItemsContentPage
+    let deleteItemPage: DeleteButtonPage
 
     const item1name = "Miel"
     const item1sellin = 20
@@ -16,24 +17,24 @@ describe("Deleting Items", () => {
 
 
     before(() => {
-            menuContentPage = new ItemsContentPage()
-        })
-
-    it("then should delete and stop displaying the item deleted in list view and insight information updated", () => {
-
+        menuContentPage = new ItemsContentPage()
+        deleteItemPage = new DeleteButtonPage()
         cy.request("http://localhost:8080/api/items").then(response =>{
             for (const item of response.body) {
-                    cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
             }
         })
 
         cy.request("POST","http://localhost:8080/api/items/", {"name" : item1name,"sellIn": item1sellin,"quality" : item1quality,"type": item1type})
         cy.request("POST","http://localhost:8080/api/items/", {"name" : item2name,"sellIn": item2sellin,"quality" : item2quality,"type": item2type})
+    })
+
+    it("then should delete and stop displaying the item deleted in list view and insight information updated", () => {
 
         menuContentPage.visitMenuContentPage()
 
-        cy.get(".list-col .mat-icon[data-automation='list-delete-button']").first().click()
-        cy.get("[data-automation=delete-dialog-confirm-button]").click()
+        menuContentPage.clickFirtsDeleteButton()
+        deleteItemPage.clickDeleteConfirmButton()
 
         cy.wait(1000)
         cy.get("[data-automation=list-item-row]").then(rows => {
@@ -50,7 +51,7 @@ describe("Deleting Items", () => {
             expect(validated).to.be.true
         })
 
-        cy.get(".list-buttons > button.list-insights-button").click()
+        menuContentPage.clickInsightsButton()
 
         cy.wait(1000)
 
