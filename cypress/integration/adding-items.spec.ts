@@ -1,8 +1,10 @@
-import { ItemsContentPage } from "../page/index"
+import { ItemsContentPage,AddButtonPage } from "../page/index"
 
 describe("Adding Items", () => {
 
     let menuContentPage: ItemsContentPage
+    let addButttonPage: AddButtonPage
+
     const name = "panela"
     const sellin = "10"
     const quality = "50"
@@ -10,9 +12,10 @@ describe("Adding Items", () => {
 
     before(() => {
         menuContentPage = new ItemsContentPage()
+        addButttonPage = new AddButtonPage()
     })
 
-    it("then should be bought a t-shirt", () => {
+    it("then should be added a new item, and check if displayed accordingly in list view", () => {
 
         cy.request("http://localhost:8080/api/items").then(response =>{
             for (const item of response.body) {
@@ -23,16 +26,18 @@ describe("Adding Items", () => {
         })
 
         menuContentPage.visitMenuContentPage()
+        menuContentPage.clickAddButton()
 
-        cy.get(".list-buttons > button.list-add-button").click()
-        cy.get("[formcontrolname=name]").type(name)
-        cy.get("[formcontrolname=sellIn]").type(sellin)
-        cy.get("[formcontrolname=quality]").type(quality)
-        cy.get("[formcontrolname=type] .mat-select-arrow-wrapper").click()
-        cy.get("[role=listbox] [role=option]").contains(type).click()
-        cy.get("[data-automation=item-form-confirm-button]").click()
-        cy.wait(3000)
-        cy.get("[data-automation=list-item-row]").then(rows => {
+        addButttonPage.goToNameTextField(name)
+        addButttonPage.goToSellInTextField(sellin)
+        addButttonPage.goToQualityTextField(quality)
+        addButttonPage.clickTypeSelectField()
+        addButttonPage.chooseTypeSelection(type)
+        addButttonPage.clickAddConfirmButton()
+
+        cy.wait(1000)
+
+         cy.get("[data-automation=list-item-row]").then(rows => {
             let validated = false
             for (let i = 0; i < rows.length; i++) {
                 const cols = rows[i].querySelectorAll(".list-col")
