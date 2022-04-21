@@ -1,28 +1,31 @@
-import { ItemsContentPage } from "../page/index"
+import { ItemsContentPage,AddButtonPage } from "../page/index"
 
-describe("Adding Items", () => {
+describe("Adding Items Missing Info", () => {
 
     let menuContentPage: ItemsContentPage
+    let addButttonPage: AddButtonPage
+
     const name = "manzana"
     const sellin = "10"
     const quality = "-2"
-    //const type = "NORMAL"
+    const type = "NORMAL"
 
     before(() => {
         menuContentPage = new ItemsContentPage()
+        addButttonPage = new AddButtonPage()
     })
 
-    it("then should be bought a t-shirt", () => {
+    it("then should be added an item with negative quality, an error message will be displayed and add button disabled", () => {
 
         menuContentPage.visitMenuContentPage()
+        menuContentPage.clickAddButton()
+        addButttonPage.goToNameTextField(name)
+        addButttonPage.goToSellInTextField(sellin)
+        addButttonPage.goToQualityTextField(quality)
+        addButttonPage.clickTypeSelectField()
+        addButttonPage.chooseTypeSelection(type)
 
-        cy.get(".list-buttons > button.list-add-button").click()
-
-        cy.get("[formcontrolname=name]").type(name)
-        cy.get("[formcontrolname=quality]").type(quality)
-        cy.get("[formcontrolname=sellIn]").type(sellin)
-        cy.get("[data-automation=item-form-confirm-button]").should("be.disabled")
-
-        cy.get(".mat-form-field-subscript-wrapper .mat-error").should("have.text", " Expected value between 0 and 80 ")
+        addButttonPage.verityAddConfirmButton()
+        addButttonPage.verifyErrorMessage()
     });
 });

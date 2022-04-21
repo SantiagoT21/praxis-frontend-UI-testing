@@ -6,6 +6,7 @@ class AddButtonPage {
     private typeSelectField: string
     private typeSelection: string
     private addConfirmButton: string
+    private errorMessage: string
 
     constructor() {
         this.nameTextField="[formcontrolname=name]"
@@ -14,6 +15,7 @@ class AddButtonPage {
         this.typeSelectField="[formcontrolname=type] .mat-select-arrow-wrapper"
         this.typeSelection="[role=listbox] [role=option]"
         this.addConfirmButton="[data-automation=item-form-confirm-button]"
+        this.errorMessage=".mat-form-field-subscript-wrapper .mat-error"
     }
 
     public goToNameTextField(name): void {
@@ -35,7 +37,13 @@ class AddButtonPage {
     public clickAddConfirmButton():void{
         cy.get(this.addConfirmButton).click()
     }
+    public verityAddConfirmButton():void{
+        cy.get(this.addConfirmButton).should("be.disabled")
+    }
 
+    public verifyErrorMessage():void{
+        cy.get(this.errorMessage).should("have.text", " Expected value between 0 and 80 ")
+    }
 
 }
 export { AddButtonPage }
