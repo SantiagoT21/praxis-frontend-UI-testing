@@ -1,8 +1,10 @@
-import { ItemsContentPage } from "../page/index"
+import { ItemsContentPage,AddButtonPage } from "../page/index"
 
-describe("Adding Items", () => {
+describe("Updating Item Type", () => {
 
     let menuContentPage: ItemsContentPage
+    let addButtonPage: AddButtonPage
+
     const name = "Miel"
     const sellin = 20
     const quality = 50
@@ -11,27 +13,28 @@ describe("Adding Items", () => {
 
     before(() => {
         menuContentPage = new ItemsContentPage()
-    })
-
-    it("then should be bought a t-shirt", () => {
-
-        cy.request("http://localhost:8080/api/items").then(response =>{
-            for (const item of response.body) {
-                    cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
-            }
-        })
+        addButtonPage = new AddButtonPage()
+         cy.request("http://localhost:8080/api/items").then(response =>{
+                    for (const item of response.body) {
+                            cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                    }
+                })
 
         cy.request("POST","http://localhost:8080/api/items/", {"name" : name,"sellIn": sellin,"quality" : quality,"type": type})
+    })
+
+    it("then should update the type of an existing item, verify if it changes in the items list view and updates the amount in insights menu ", () => {
+
 
         menuContentPage.visitMenuContentPage()
+        menuContentPage.clickFirtsEditButton()
 
-        cy.get(".list-col .mat-icon[data-automation='list-edit-button']").first().click()
-        cy.get("[formcontrolname=type] .mat-select-arrow-wrapper").click()
-        cy.get("[role=listbox] [role=option]").contains(newType).click()
+        addButtonPage.clickTypeSelectField()
+        addButtonPage.chooseTypeSelection(newType)
+        addButtonPage.clickAddConfirmButton()
 
-        cy.get("[data-automation=item-form-confirm-button]").click()
+        cy.wait(1000)
 
-        cy.wait(3000)
         cy.get("[data-automation=list-item-row]").then(rows => {
             let validated = false
             for (let i = 0; i < rows.length; i++) {
@@ -43,9 +46,9 @@ describe("Adding Items", () => {
             expect(validated).to.be.true
         })
 
-        cy.get(".list-buttons > button.list-insights-button").click()
+        menuContentPage.clickInsightsButton()
 
-        cy.wait(3000)
+        cy.wait(1000)
 
         cy.get(".insights-grid .insights-value").then(values => {
             let validatedInsights = false

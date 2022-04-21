@@ -3,7 +3,7 @@ import { ItemsContentPage,AddButtonPage } from "../page/index"
 describe("Adding Items", () => {
 
     let menuContentPage: ItemsContentPage
-    let addButttonPage: AddButtonPage
+    let addButtonPage: AddButtonPage
 
     const name = "panela"
     const sellin = "10"
@@ -12,7 +12,7 @@ describe("Adding Items", () => {
 
     before(() => {
         menuContentPage = new ItemsContentPage()
-        addButttonPage = new AddButtonPage()
+        addButtonPage = new AddButtonPage()
     })
 
     it("then should be added a new item, and check if displayed accordingly in list view", () => {
@@ -28,12 +28,12 @@ describe("Adding Items", () => {
         menuContentPage.visitMenuContentPage()
         menuContentPage.clickAddButton()
 
-        addButttonPage.goToNameTextField(name)
-        addButttonPage.goToSellInTextField(sellin)
-        addButttonPage.goToQualityTextField(quality)
-        addButttonPage.clickTypeSelectField()
-        addButttonPage.chooseTypeSelection(type)
-        addButttonPage.clickAddConfirmButton()
+        addButtonPage.goToNameTextField(name)
+        addButtonPage.goToSellInTextField(sellin)
+        addButtonPage.goToQualityTextField(quality)
+        addButtonPage.clickTypeSelectField()
+        addButtonPage.chooseTypeSelection(type)
+        addButtonPage.clickAddConfirmButton()
 
         cy.wait(1000)
 
