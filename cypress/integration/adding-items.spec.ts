@@ -10,14 +10,16 @@ describe("Adding Items", () => {
     const quality = "50"
     const type = "NORMAL"
 
+    const apiUrl = "/api/items/"
+
     before(() => {
         menuContentPage = new ItemsContentPage()
         addButtonPage = new AddButtonPage()
 
-        cy.request("http://localhost:8080/api/items").then(response =>{
+        cy.request(apiUrl).then(response =>{
                     for (const item of response.body) {
                         if(item.name === name && item.sellIn.toString() === sellin && item.quality.toString() === quality && item.type === type){
-                            cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                            cy.request("DELETE",apiUrl+item.id)
                         }
                     }
         })

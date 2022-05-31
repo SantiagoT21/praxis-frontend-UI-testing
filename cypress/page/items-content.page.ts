@@ -6,7 +6,7 @@ class ItemsContentPage {
     private deleteButton: string
 
     constructor() {
-        this.menuContentPageURL = 'http://localhost:4200/list'
+        this.menuContentPageURL = "/list"
         this.addButton='.list-buttons > button.list-add-button'
         this.editButton=".list-col .mat-icon[data-automation='list-edit-button']"
         this.insightsButton=".list-buttons > button.list-insights-button"

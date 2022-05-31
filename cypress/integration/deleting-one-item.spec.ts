@@ -15,18 +15,20 @@ describe("Deleting Items", () => {
      const item2quality = 40
      const item2type = "NORMAL"
 
+    const apiUrl = "/api/items/"
+
 
     before(() => {
         menuContentPage = new ItemsContentPage()
         deleteItemPage = new DeleteButtonPage()
-        cy.request("http://localhost:8080/api/items").then(response =>{
+        cy.request(apiUrl).then(response =>{
             for (const item of response.body) {
-                cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                cy.request("DELETE",apiUrl+item.id)
             }
         })
 
-        cy.request("POST","http://localhost:8080/api/items/", {"name" : item1name,"sellIn": item1sellin,"quality" : item1quality,"type": item1type})
-        cy.request("POST","http://localhost:8080/api/items/", {"name" : item2name,"sellIn": item2sellin,"quality" : item2quality,"type": item2type})
+        cy.request("POST",apiUrl, {"name" : item1name,"sellIn": item1sellin,"quality" : item1quality,"type": item1type})
+        cy.request("POST",apiUrl, {"name" : item2name,"sellIn": item2sellin,"quality" : item2quality,"type": item2type})
     })
 
     it("then should delete and stop displaying the item deleted in list view and insight information updated", () => {

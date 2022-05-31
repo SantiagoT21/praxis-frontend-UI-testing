@@ -11,16 +11,18 @@ describe("Updating Item Type", () => {
     const type = "NORMAL"
     const newType = "AGED"
 
+    const apiUrl = "/api/items/"
+
     before(() => {
         menuContentPage = new ItemsContentPage()
         addButtonPage = new AddButtonPage()
-         cy.request("http://localhost:8080/api/items").then(response =>{
+         cy.request(apiUrl).then(response =>{
                     for (const item of response.body) {
-                            cy.request("DELETE","http://localhost:8080/api/items/"+item.id)
+                            cy.request("DELETE",apiUrl+item.id)
                     }
                 })
 
-        cy.request("POST","http://localhost:8080/api/items/", {"name" : name,"sellIn": sellin,"quality" : quality,"type": type})
+        cy.request("POST",apiUrl, {"name" : name,"sellIn": sellin,"quality" : quality,"type": type})
     })
 
     it("then should update the type of an existing item, verify if it changes in the items list view and updates the amount in insights menu ", () => {
