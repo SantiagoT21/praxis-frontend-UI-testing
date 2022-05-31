@@ -10,7 +10,7 @@ pipeline {
     }
     stage("Run UI frontend test") {
        steps {
-          sh 'npm test'
+          sh 'CYPRESS_BASE_URL=$FRONT_URL npm test'
        }
     }
     stage("Report in html") {
