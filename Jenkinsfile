@@ -8,7 +8,7 @@ pipeline {
           sh 'npm i'
        }
     }
-    stage("Run IU frontend test") {
+    stage("Run UI frontend test") {
        steps {
           sh 'npm test'
        }
