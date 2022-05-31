@@ -6,13 +6,11 @@ pipeline {
     stage("Install dependencies") {
        steps {
           sh 'npm i'
-          sh '<<Build Command>>'
        }
     }
     stage("Run IU frontend test") {
        steps {
           sh 'npm test'
-          sh '<<Test Command>>'
        }
     }
     stage("Report in html") {
