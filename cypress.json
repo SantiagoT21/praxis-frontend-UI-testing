@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://3.219.104.93:4200",
-  "defaultCommandTimeout": 20000,
-  "responseTimeout": 20000,
+  "defaultCommandTimeout": 20000000,
+  "responseTimeout": 20000000,
   "video": false,
   "screenshotOnRunFailure": false,
   "reporter": "cypress-multi-reporters",
